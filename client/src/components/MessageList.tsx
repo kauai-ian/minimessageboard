@@ -1,19 +1,19 @@
-// displays the list of messages fetched from the API
-
-
+// displays the list of messages from the state
+import React from "react";
+import Message, { MessageProps } from "./Message";
 
 export type MessageListProps = {
+  messageBoard: MessageProps[];
+};
 
-}
+const MessageList: React.FC<MessageListProps> = ({ messageBoard }) => {
+  return (
+    <ul>
+      {messageBoard.map((message) => (
+        <Message key={message.id} {...message} />
+      ))}
+    </ul>
+  );
+};
 
-const MessageList = ({}) => {
-// set a variable for the list
-    // find the list and display it
-
-
-    return (
-        <>
-
-        </>
-    )
-}
+export default MessageList;

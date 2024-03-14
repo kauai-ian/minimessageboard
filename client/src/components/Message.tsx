@@ -3,18 +3,19 @@
 import capFrstLtr from "../helpers/CapFirstLtr";
 
 export type MessageProps = {
-    user: string,
-    text: string,
-    timestamp: string
-}
+  id: string;
+  user: string;
+  text: string;
+  timestamp: string;
+};
 
 // user, text, timestamp
 
-const Message = ({ user, text, timestamp }: MessageProps) => {
+const Message = ({ id, user, text, timestamp }: MessageProps) => {
   return (
     <>
       <li className="message">
-        <div>
+        <div key={id}>
           <span>User: {user}</span>
           <span>Text: {capFrstLtr(text)}</span>
           <span>Timestamp: {timestamp}</span>
@@ -25,4 +26,3 @@ const Message = ({ user, text, timestamp }: MessageProps) => {
 };
 
 export default Message;
-
