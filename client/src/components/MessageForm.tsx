@@ -1,24 +1,61 @@
 // Enables users to compose and submit new messages
 
-import { useState } from "react";
-import {Message, MessageProps} from "./Message";
+import React, { useState } from "react";
 
 export type MessageFormProps = {
+  addMessage: ( text: string, user: string) => void;
+};
 
-}
+const MessageForm: React.FC<MessageFormProps> = ({ addMessage }) => {
+  const [message, setMessage] = useState("");
+  const [user, setUser] = useState("");
 
-const MessageForm = ({addItem}) => {
-const [newItem, setNewItem] = useState("")
-const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(newItem === "") return
-    addItem(newItem)
-    setNewItem("")
-}
+    if (message === "" || user === "") return;
+    addMessage( message, user);
+    setMessage("");
+    setUser("");
+  };
 
-    return (
-        <>
+  return (
+    <>
+      <section className="form-section">
+        <h2>Create Message</h2>
+        <form
+          action=""
+          onSubmit={handleSubmit}
+          className="new-message-form"
+          name="new-message-form"
+        >
+          <div className="form-row">
+            <label htmlFor="user">User:</label>
+            <input
+              type="text"
+              name="user"
+              id={Date.now().toString()}
+              placeholder="Enter user here"
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
+            />
+          </div>
+          <div className="form-row">
+            <label htmlFor="message">Message:</label>
+            <input
+              type="text"
+              name="message"
+              id={Date.now().toString()}
+              placeholder="Enter message here"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+          </div>
+          
+          <button className="btn">+</button>
+        </form>
+      </section>
+    </>
+  );
+};
 
-        </>
-    )
-}
+export default MessageForm;
