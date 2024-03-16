@@ -3,17 +3,19 @@
 import React, { useState } from "react";
 
 export type MessageFormProps = {
-  addMessage: ( text: string, user: string) => void;
+  addMessage: (title: string, text: string, user: string) => void;
 };
 
 const MessageForm: React.FC<MessageFormProps> = ({ addMessage }) => {
+  const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [user, setUser] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (message === "" || user === "") return;
-    addMessage( message, user);
+    if (title === "" || message === "" || user === "") return;
+    addMessage(title, message, user);
+    setTitle("");
     setMessage("");
     setUser("");
   };
@@ -33,10 +35,19 @@ const MessageForm: React.FC<MessageFormProps> = ({ addMessage }) => {
             <input
               type="text"
               name="user"
-              id={Date.now().toString()}
               placeholder="Enter user here"
               value={user}
               onChange={(e) => setUser(e.target.value)}
+            />
+          </div>
+          <div className="form-row">
+            <label htmlFor="title">Title:</label>
+            <input
+              type="text"
+              name="title"
+              placeholder="Enter title here"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
           <div className="form-row">
@@ -44,7 +55,6 @@ const MessageForm: React.FC<MessageFormProps> = ({ addMessage }) => {
             <input
               type="text"
               name="message"
-              id={Date.now().toString()}
               placeholder="Enter message here"
               value={message}
               onChange={(e) => setMessage(e.target.value)}

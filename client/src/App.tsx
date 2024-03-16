@@ -15,11 +15,11 @@ function App() {
 
   //render items function maps over the message board for each message it displays the message data
 
-  const addMessage = ( message: string, user: string) => {
+  const addMessage = ( title: string, message: string, user: string) => {
     const timestamp = new Date().toISOString()
     const id = timestamp
     if (message) {
-      setMessageBoard([...messageBoard, { id, message, user, timestamp}]); //update state
+      setMessageBoard([...messageBoard, { id, title, message, user, timestamp}]); //update state
     }
   };
   // TODO: render items function
