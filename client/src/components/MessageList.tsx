@@ -10,7 +10,7 @@ const MessageList: React.FC<MessageListProps> = ({ messageBoard }) => {
   return (
     <ul>
       {messageBoard.map((message) => (
-        <Message key={message.id} {...message} />
+        <Message key={message._id} {...message} />
       ))}
     </ul>
   );

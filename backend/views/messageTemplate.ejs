@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Plant Lovers Message Board</title>
+  </head>
+  <body>
+    <h1>Growing List of Messages</h1>
+    <ul>
+      <% Messages.forEach(function(item) { %>
+      <li>
+        <h2><%= item.title %></h2>
+        <p>Message: <%= item.text %></p>
+      </li>
+      <% }); %>
+    </ul>
+  </body>
+</html>

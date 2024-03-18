@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
     title: String, 
-    message: String,
+    text: String,
+    user: String,
+    timestamp: String,
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 });
