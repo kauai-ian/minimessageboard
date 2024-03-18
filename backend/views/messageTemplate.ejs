@@ -6,10 +6,10 @@
   <body>
     <h1>Growing List of Messages</h1>
     <ul>
-      <% Messages.forEach(function(item) { %>
+      <% Messages.forEach(function(message) { %>
       <li>
-        <h2><%= item.title %></h2>
-        <p>Message: <%= item.text %></p>
+        <h2><%= message.title %></h2>
+        <p>Message: <%= message.text %></p>
       </li>
       <% }); %>
     </ul>

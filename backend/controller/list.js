@@ -5,7 +5,7 @@ const { body, validationResult } = require("express-validator");
 exports.list = async (req, res) => {
   try {
     const messages = await Messages.find();
-    res.json(messages);
+    res.json("index", { Messages: messages }); // pass the messages to the view
   } catch (error) {
     res.status(500).json({ message: err.message });
   }
