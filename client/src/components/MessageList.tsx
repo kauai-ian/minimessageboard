@@ -7,6 +7,7 @@ export type MessageListProps = {
 };
 
 const MessageList: React.FC<MessageListProps> = ({ messageBoard }) => {
+  console.log("Message Board:", typeof(messageBoard));
   return (
     <ul>
       {messageBoard.map((message) => (

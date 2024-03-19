@@ -1,23 +1,24 @@
 const Messages = require("../models/Messages");
 const { body, validationResult } = require("express-validator");
+const createError = require("http-errors");
 
 // get all messages app.METHOD(PATH, HANDLER)
 exports.list = async (req, res) => {
   try {
     const messages = await Messages.find();
-    res.json("index", { Messages: messages }); // pass the messages to the view
+    res.status(200).json(messages); // pass the messages to the view
   } catch (error) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
 // create message
 exports.create = async (req, res, next) => {
   const validationRules = [
-    body("title").notEmpty().withMessage("Title is required"),
-    body("text").notEmpty().withMessage("Text is required"),
-    body("user").notEmpty().withMessage("user is required"),
-    body("timestamp").notEmpty().withMessage("Timestamp is required"),
+    body("title").notEmpty().withMessage("Title is required").escape(),
+    body("text").notEmpty().withMessage("Text is required").escape(),
+    body("user").notEmpty().withMessage("user is required").escape(),
+    body("timestamp").notEmpty().withMessage("Timestamp is required").escape(),
   ];
   const errors = validationResult(req); // checks validation
   if (!errors.isEmpty()) {
@@ -29,15 +30,13 @@ exports.create = async (req, res, next) => {
     const { title, text, user, timestamp } = req.body;
     const message = new Messages({ title, text, user, timestamp });
     await message.save();
-    res.json({ message: "message create success!", data: message });
+    res.status(201).json({ message: "message create success!", data: message });
   } catch (error) {
     next(error);
   }
 };
 
-// delete message
-
-// edit message
+// edit message by using the id and update in express
 exports.edit = async (req, res, next) => {
   try {
     const { _id } = req.params;
@@ -46,12 +45,14 @@ exports.edit = async (req, res, next) => {
     // find message by ID
     const updatedMessage = await Messages.findByIdAndUpdate(
       _id,
-      { text },
+      { text: text },
       { new: true }
     );
 
-    res.json(updatedMessage);
+    res.status(200).json(updatedMessage);
   } catch (error) {
     next(error);
   }
 };
+
+// TODO: delete message
