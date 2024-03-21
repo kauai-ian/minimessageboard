@@ -2,16 +2,10 @@
 
 import React, { useState } from "react";
 import capFrstLtr from "../helpers/CapFirstLtr";
-import axios from "axios";
-import { API_MessageBoard } from "../App";
+import { MessageType } from "../types";
 
-export type MessageProps = {
-  _id: string;
-  user: string;
-  title: string;
-  text: string;
-  timestamp: string;
-  onEdit: (editedMessage: string) => void;
+export type MessageProps = MessageType & {
+  onUpdate: (editedMessage: string, id: string) => void;
 };
 
 const Message: React.FC<MessageProps> = ({
@@ -20,6 +14,7 @@ const Message: React.FC<MessageProps> = ({
   title,
   text,
   timestamp,
+  onUpdate,
 }) => {
   const [editMode, setEditMode] = useState(false);
   const [editedText, setEditedText] = useState(text);
@@ -30,8 +25,7 @@ const Message: React.FC<MessageProps> = ({
 
   const handleSave = async () => {
     try {
-      await axios.put(`${API_MessageBoard}/${_id}`, { text: editedText });
-      setEditMode(false);
+      onUpdate(editedText, _id);
     } catch (error) {
       console.error("Error updating message", error);
     }
