@@ -6,7 +6,7 @@ const createError = require("http-errors");
 exports.list = async (req, res) => {
   try {
     const messages = await Messages.find();
-    res.status(200).json(messages); // pass the messages to the view
+    res.status(200).json({data: messages}); // pass the messages to the view
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -27,8 +27,8 @@ exports.create = async (req, res, next) => {
 
   // validation passed
   try {
-    const { title, text, user, timestamp } = req.body;
-    const message = new Messages({ title, text, user, timestamp });
+    const { title, text, user } = req.body;
+    const message = new Messages({ title, text, user, timestamp: Date.now() });
     await message.save();
     res.status(201).json({ message: "message create success!", data: message });
   } catch (error) {
@@ -41,6 +41,10 @@ exports.edit = async (req, res, next) => {
   try {
     const { _id } = req.params;
     const { text } = req.body;
+    // dont update if text is empty
+    if (!text) {
+      return next(createError(400, "text is required"))
+    }
 
     // find message by ID
     const updatedMessage = await Messages.findByIdAndUpdate(
@@ -49,10 +53,19 @@ exports.edit = async (req, res, next) => {
       { new: true }
     );
 
-    res.status(200).json(updatedMessage);
+    res.status(200).json({data: updatedMessage});
   } catch (error) {
     next(error);
   }
 };
 
-// TODO: delete message
+
+exports.remove = async(req, res, next) => {
+  try {
+    const { _id} = req.params
+    await Messages.findByIdAndDelete(_id)
+    res.status(200).json({message: "message deleted successfully"})
+  } catch (error) {
+    next(error)
+  }
+}
