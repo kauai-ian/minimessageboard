@@ -1,12 +1,12 @@
 var express = require("express");
 var router = express.Router();
 
-const controller = require("../controller/list");
+const messages = require("../controller/messages");
 
 /* GET home page. */
-router.get("/messages", controller.list);
-router.post("/messages", controller.create);
-router.put("/messages/:_id", controller.edit);
-// router.delete("/message/:_id", controller.delete);  TODO
+router.get("/messages", messages.list);
+router.post("/messages", messages.create);
+router.put("/messages/:messageId", messages.edit);
+router.delete("/message/:_id", messages.remove);
 
 module.exports = router;
