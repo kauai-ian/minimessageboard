@@ -2,9 +2,12 @@
 
 import React, { useState } from "react";
 
+
+
 export type MessageFormProps = {
   addMessage: (title: string, text: string, user: string) => void;
 };
+
 
 const MessageForm: React.FC<MessageFormProps> = ({ addMessage }) => {
   const [title, setTitle] = useState("");
@@ -19,6 +22,8 @@ const MessageForm: React.FC<MessageFormProps> = ({ addMessage }) => {
     setMessage("");
     setUser("");
   };
+
+  
 
   return (
     <>
@@ -62,6 +67,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ addMessage }) => {
           </div>
           
           <button className="btn">+</button>
+          
         </form>
       </section>
     </>

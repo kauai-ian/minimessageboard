@@ -6,7 +6,7 @@ import MessageForm from "./components/MessageForm";
 import { MessageType } from "./types";
 
 // set API for messageBoard
- const API_MessageBoard = "http://localhost:3000";
+const API_MessageBoard = "http://localhost:3000";
 
 function App() {
   const [messages, setMessages] = useState<MessageType[]>([]);
@@ -59,9 +59,17 @@ function App() {
       console.error("failed to update message", error);
     }
   };
-  // TODO: render items function
-  // TODO: edit item function
-  // TODO: delete item function
+
+  const handleRemove = async (id: string) => {
+    try {
+      await axios.delete(`${API_MessageBoard}/messages/${id}`);
+      setMessages((prevMessages: MessageType[]) =>
+        prevMessages.filter((message) => message._id !== id)
+      );
+    } catch (error) {
+      console.error("failed to delete message", error);
+    }
+  };
 
   return (
     <>
@@ -72,6 +80,7 @@ function App() {
             key={message._id}
             {...message}
             onUpdate={handleUpdateMessages}
+            onRemove={handleRemove}
           />
         ))}
       </ul>

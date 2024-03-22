@@ -6,6 +6,7 @@ import { MessageType } from "../types";
 
 export type MessageProps = MessageType & {
   onUpdate: (editedMessage: string, id: string) => void;
+  onRemove: (id: string) => void;
 };
 
 const Message: React.FC<MessageProps> = ({
@@ -15,6 +16,7 @@ const Message: React.FC<MessageProps> = ({
   text,
   timestamp,
   onUpdate,
+  onRemove
 }) => {
   const [editMode, setEditMode] = useState(false);
   const [editedText, setEditedText] = useState(text);
@@ -25,11 +27,15 @@ const Message: React.FC<MessageProps> = ({
 
   const handleSave = async () => {
     try {
-      onUpdate(editedText, _id)
+      onUpdate(editedText, _id);
       setEditMode(false);
     } catch (error) {
       console.error("Error updating message", error);
     }
+  };
+
+  const handleRemove = async () => {
+    onRemove(_id)
   };
 
   return (
@@ -48,9 +54,15 @@ const Message: React.FC<MessageProps> = ({
             <span>Message: {capFrstLtr(text)}</span>
           )}
           {editMode ? (
-            <button onClick={handleSave}>Save</button>
+            <>
+              <button onClick={handleSave}>Save</button>
+              <button onClick={handleRemove}>Remove</button>
+            </>
           ) : (
+            <>
             <button onClick={handleEdit}>Edit</button>
+            <button onClick={handleRemove}>Remove</button>
+            </>
           )}
         </div>
       </li>
