@@ -39,7 +39,7 @@ exports.create = async (req, res, next) => {
 // edit message by using the id and update in express
 exports.edit = async (req, res, next) => {
   try {
-    const { _id } = req.params;
+    const { messageId } = req.params;
     const { text } = req.body;
     // dont update if text is empty
     if (!text) {
@@ -48,7 +48,7 @@ exports.edit = async (req, res, next) => {
 
     // find message by ID
     const updatedMessage = await Messages.findByIdAndUpdate(
-      _id,
+      messageId,
       { text: text },
       { new: true }
     );
@@ -62,8 +62,10 @@ exports.edit = async (req, res, next) => {
 
 exports.remove = async(req, res, next) => {
   try {
-    const { _id} = req.params
-    await Messages.findByIdAndDelete(_id)
+    const { messageId} = req.params
+    console.log(messageId);
+    await Messages.findByIdAndDelete(messageId)
+    
     res.status(200).json({message: "message deleted successfully"})
   } catch (error) {
     next(error)
