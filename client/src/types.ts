@@ -5,3 +5,14 @@ export type MessageType = {
   text: string;
   timestamp: string;
 };
+
+export type SignupFormData = {
+  username: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export type LoginFormData = {
+  username: string;
+  password: string;
+};
