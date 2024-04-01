@@ -2,7 +2,7 @@
 import axios from "axios";
 import API_Url from "./config";
 import getErrorMessage from "../helpers/getErrorMessage";
-// login function async using username and pw.
+
 export const login = async ({
   username,
   password,
@@ -14,6 +14,8 @@ export const login = async ({
     const res = await axios.post(`${API_Url}/auth/login`, {
       username,
       password,
+    }, {
+      withCredentials: true // Include credentials to allow cookies sharing
     });
     return await res.data;
   } catch (error) {
@@ -21,9 +23,6 @@ export const login = async ({
   }
 };
 
-// response endpoint login. post body: username, pw return response in json format
-
-// function register async posts to the registration endpoint . username, pw, confirm pw
 export const signup = async ({
   username,
   password,
@@ -35,13 +34,14 @@ export const signup = async ({
     const res = await axios.post(`${API_Url}/auth/signup`, {
       username,
       password,
+    }, {
+      withCredentials: true 
     });
     return await res.data;
   } catch (error) {
     throw new Error("Failed to login: " + getErrorMessage(error));
   }
 };
-// function logout async deletes to the logout endpoint
 
 export const logout = async () => {
   try {

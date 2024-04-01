@@ -1,6 +1,7 @@
-// authentication and authorization logic
+// auth.controller.js authentication and authorization logic
 const passport = require("passport");
-const User = requrie("../models/User");
+const User = require("../models/User");
+
 
 //handle login takes in a request, authenticates user vs db username, logs in or error.
 exports.login = (req, res, next) => {
