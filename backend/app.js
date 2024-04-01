@@ -1,3 +1,4 @@
+// app.js
 require("dotenv").config();
 const createError = require("http-errors");
 const express = require("express");
@@ -54,7 +55,7 @@ app.use(
 app.use(passport.authenticate("session"));
 
 app.use("/", indexRouter);
-app.use("/", authRouter);
+app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
