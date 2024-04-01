@@ -1,3 +1,7 @@
-Members only with express.js, node, React, Mongodb and authentication with JWTs. 
+Members only with express.js, node, React, Mongodb and authentication with cookies. 
 
-<img src="client/src/assets/localhost_5173_%20(1).png" alt="Alt Text" width="600" />
+Not working. 
+
+Current phase:
+1. 404 error on signup - a mismatch between the front end and backend somewhere tbd. 
+
