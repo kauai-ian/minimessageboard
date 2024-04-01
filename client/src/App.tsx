@@ -8,6 +8,7 @@ import AuthRoute from "./components/AuthRoute";
 import Signup from "./pages/Signup";
 
 function App() {
+ 
   return (
     <>
       <Navbar />
@@ -23,7 +24,7 @@ function App() {
           }
         />
         <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/messages" element={<AuthRoute><MessageBoard /></AuthRoute>} /> */}
+        {/* <Route path="/messages" element={<AuthRoute><MessageBoard /></AuthRoute>} /> to be done in future feature to have users post if logged in*/}
           
       </Routes>
     </>

@@ -30,8 +30,7 @@ const Login = () => {
     await login({ username, password });
   };
 
-  // init state setLoginStatus(initState)
-  // returns form with inputs above
+  
   return (
     <>
       <Form

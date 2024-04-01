@@ -16,7 +16,7 @@ const Message: React.FC<MessageProps> = ({
   text,
   timestamp,
   onUpdate,
-  onRemove
+  onRemove,
 }) => {
   const [editMode, setEditMode] = useState(false);
   const [editedText, setEditedText] = useState(text);

@@ -8,6 +8,7 @@ import { useCookies } from "react-cookie";
 
 export type CookieContextType = {
   cookies: { [x: string]: unknown };
+  loggedIn: boolean;
   removeCookie: (name: string, options?: object) => void;
   setCookie: (name: string, value: string | object, options?: object) => void;
 };
@@ -29,6 +30,7 @@ export const CookieProvider: React.FC<PropsWithChildren<object>> = ({
   children,
 }) => {
   const [cookies, setCookie, removeCookie] = useCookies();
+  const loggedIn = !!cookies["user-cookie"]
 
   const setCookieHandler = (
     name: string,
@@ -43,6 +45,7 @@ export const CookieProvider: React.FC<PropsWithChildren<object>> = ({
   };
   const contextValue: CookieContextType = {
     cookies,
+    loggedIn,
     setCookie: setCookieHandler,
     removeCookie: removeCookieHandler,
   };

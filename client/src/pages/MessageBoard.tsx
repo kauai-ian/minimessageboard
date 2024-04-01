@@ -4,11 +4,13 @@ import Message from "../components/Message";
 import { MessageType } from "../types";
 import API_Url from "../api/config";
 import MessageForm from "../components/MessageForm";
+import { useCookieContext } from "../context/auth.context";
 
 const MessageBoard = () => {
+  const { loggedIn, cookies } = useCookieContext();
   const [messages, setMessages] = useState<MessageType[]>([]);
 
-  // useEffect to fetchData
+  //fetchData anytime state changes
   useEffect(() => {
     fetchData();
   }, []);
@@ -26,12 +28,12 @@ const MessageBoard = () => {
     }
   };
 
-  const addMessage = async (title: string, text: string, user: string) => {
+  const addMessage = async (title: string, text: string) => {
     try {
       const { data } = await axios.post(`${API_Url}/messages`, {
         title,
         text,
-        user,
+        user: cookies.username,
       });
       setMessages([...messages, data.data]);
     } catch (error) {
@@ -80,8 +82,14 @@ const MessageBoard = () => {
             onRemove={handleRemove}
           />
         ))}
-      </ul>
-      <MessageForm addMessage={addMessage} />
+      </ul>{" "}
+      {loggedIn && (
+        <MessageForm
+          addMessage={addMessage}
+          loggedIn={loggedIn}
+          username={""}
+        />
+      )}
     </>
   );
 };
