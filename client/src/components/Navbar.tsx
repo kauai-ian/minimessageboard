@@ -67,6 +67,15 @@ export default function Navbar() {
                 variant={"link"}
                 href={"/"}
               >
+                Home
+              </Button>
+              <Button
+                as={"a"}
+                fontSize={"sm"}
+                fontWeight={400}
+                variant={"link"}
+                href={"/login"}
+              >
                 Sign In
               </Button>
               <Button
@@ -74,10 +83,10 @@ export default function Navbar() {
                 fontSize={"sm"}
                 fontWeight={600}
                 color={"white"}
-                bg={"pink.400"}
-                href={"/register"}
+                bg={"blue.400"}
+                href={"/signup"}
                 _hover={{
-                  bg: "pink.300",
+                  bg: "blue.300",
                 }}
               >
                 Sign Up

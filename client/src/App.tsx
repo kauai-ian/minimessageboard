@@ -12,7 +12,8 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<MessageBoard />} />
+        <Route path="/login" element={<Login />} />
         <Route
           path="/profile"
           element={
@@ -22,7 +23,7 @@ function App() {
           }
         />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/messages" element={<AuthRoute><MessageBoard /></AuthRoute>} />
+        {/* <Route path="/messages" element={<AuthRoute><MessageBoard /></AuthRoute>} /> */}
           
       </Routes>
     </>

@@ -43,7 +43,7 @@ exports.signup = async (req, res, next) => {
     await User.register(user, password);
     // login the user (its a function so it can persist through the session)
     passport.authenticate("local")(req, res, () => {
-      res.redirect("/");
+      res.redirect("/auth/login");
     });
   } catch (err) {
     next(err);

@@ -17,8 +17,8 @@ const authRouter = require("./routes/auth.routes");
 const usersRouter = require("./routes/users.routes");
 
 // view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+// app.set("views", path.join(__dirname, "views"));
+// app.set("view engine", "ejs");
 
 app.use(logger("dev"));
 app.use(
@@ -34,8 +34,7 @@ app.use(express.urlencoded({ extended: false })); // parse form data
 // database connect
 connectdb()
 
-// session
-app.use(express.static(path.join(__dirname, "public")));
+// session middleware
 app.use(
   session({
     secret: "baby manoa",
@@ -52,11 +51,23 @@ app.use(
     },
   })
 );
+
+//passport middleware
 app.use(passport.authenticate("session"));
 
+// Serve static files from the React build directory
+// app.use(express.static(path.join(__dirname, "../client/src")));
+
+
+// mount api routes
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
+
+// Catch-all route to serve the React app
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
+// });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -65,13 +76,8 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  console.error(err.stack);
+  res.status(500).send("Internal Server Error");
 });
 
 module.exports = app;

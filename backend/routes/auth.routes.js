@@ -15,8 +15,8 @@ passport.deserializeUser(User.deserializeUser());
 
 router.post("/login/password", verifyBody, login);
 router.post("/logout",logout);
-router.get("/auth/signup", signupForm);
-router.post("/auth/signup", verifyBody, signup);
+router.get("/signup", signupForm);
+router.post("/signup", verifyBody, signup);
 router.get("/login", (req, res, next) => {
   res.render("login");
 });
