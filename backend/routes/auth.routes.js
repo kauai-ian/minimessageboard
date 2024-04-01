@@ -29,12 +29,12 @@ router.post("/logout", function (req, res, next) {
   });
 });
 //signup page render
-router.get("/signup", function (req, res, next) {
+router.get("/auth/signup", function (req, res, next) {
   res.render("signup");
 });
 
 // handle form submission . This route creates a new user record in the app's database, storing the username and hashed password. Once the record is created, the user is logged in.
-router.post("/signup", async (req, res, next) => {
+router.post("/auth/signup", async (req, res, next) => {
     try {
         const { username, password} = req.body;
         await User.register(new User({username,}), password)

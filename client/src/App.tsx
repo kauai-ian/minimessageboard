@@ -1,11 +1,11 @@
 import "./App.css";
-import MessageForm from "./components/MessageForm";
 import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router";
-import { MessageBoard } from "./pages/MessageBoard";
-
-// set API for messageBoard
-const API_MessageBoard = "http://localhost:3000";
+import MessageBoard from "./pages/MessageBoard";
+import Profile from "./pages/Profile";
+import Login from "./pages/Login";
+import AuthRoute from "./components/AuthRoute";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -18,13 +18,12 @@ function App() {
           element={
             <AuthRoute>
               <Profile />
-            </AuthRoute>
+             </AuthRoute>
           }
         />
         <Route path="/signup" element={<Signup />} />
-        <MessageBoard>
-          <MessageForm addMessage={addMessage} />
-        </MessageBoard>
+        <Route path="/messages" element={<AuthRoute><MessageBoard /></AuthRoute>} />
+          
       </Routes>
     </>
   );

@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import axios from "axios";
-import Message from "./components/Message";
-import MessageForm from "./components/MessageForm";
-import { MessageType } from "./types";
-import Navbar from "./components/Navbar";
-import { Route, Routes } from "react-router";
+import Message from "../components/Message";
+import { MessageType } from "../types";
+import API_Url from "../api/config";
+import MessageForm from "../components/MessageForm";
 
-// set API for messageBoard
-const API_MessageBoard = "http://localhost:3000";
-
-export const MessageBoard = () => {
+const MessageBoard = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
 
   // useEffect to fetchData
@@ -21,7 +16,7 @@ export const MessageBoard = () => {
   //render items function maps over the message board for each message it displays the message data
   const fetchData = async () => {
     try {
-      const res = await axios.get(`${API_MessageBoard}/messages`);
+      const res = await axios.get(`${API_Url}/messages`);
       if (!res) {
         throw new Error("failed to fetch the data");
       }
@@ -33,7 +28,7 @@ export const MessageBoard = () => {
 
   const addMessage = async (title: string, text: string, user: string) => {
     try {
-      const { data } = await axios.post(`${API_MessageBoard}/messages`, {
+      const { data } = await axios.post(`${API_Url}/messages`, {
         title,
         text,
         user,
@@ -46,7 +41,7 @@ export const MessageBoard = () => {
 
   const handleUpdateMessages = async (text: string, id: string) => {
     try {
-      const res = await axios.put(`${API_MessageBoard}/messages/${id}`, {
+      const res = await axios.put(`${API_Url}/messages/${id}`, {
         body: { text },
       });
       if (!res || res.status !== 200) {
@@ -64,7 +59,7 @@ export const MessageBoard = () => {
 
   const handleRemove = async (id: string) => {
     try {
-      await axios.delete(`${API_MessageBoard}/messages/${id}`);
+      await axios.delete(`${API_Url}/messages/${id}`);
       setMessages((prevMessages: MessageType[]) =>
         prevMessages.filter((message) => message._id !== id)
       );
@@ -86,6 +81,9 @@ export const MessageBoard = () => {
           />
         ))}
       </ul>
+      <MessageForm addMessage={addMessage} />
     </>
   );
 };
+
+export default MessageBoard;
