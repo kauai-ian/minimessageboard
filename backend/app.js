@@ -56,7 +56,7 @@ app.use(
 app.use(passport.authenticate("session"));
 
 // Serve static files from the React build directory
-// app.use(express.static(path.join(__dirname, "../client/src")));
+// app.use(express.static(path.join(__dirname, "../client/dist")));
 
 
 // mount api routes

@@ -83,13 +83,7 @@ const MessageBoard = () => {
           />
         ))}
       </ul>{" "}
-      {loggedIn && (
-        <MessageForm
-          addMessage={addMessage}
-          loggedIn={loggedIn}
-          username={""}
-        />
-      )}
+      {loggedIn && <MessageForm addMessage={addMessage} loggedIn={loggedIn} />}
     </>
   );
 };
