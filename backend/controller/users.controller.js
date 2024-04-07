@@ -1,33 +1,112 @@
 const User = require("../models/User");
+const response = require("../helpers/response");
 
 //list all the users
-const listUsers = async (req, res) => {
-  let statusCode = 500;
+exports.listUsers = async (req, res) => {
   try {
     const users = await User.find();
-    await res.status(200).json({ users });
+    return response({
+      res,
+      status: 200,
+      message: "Users found",
+      data: users,
+    });
   } catch (error) {
-    await res.status(statusCode).json({ error: error.message });
+    console.error(error);
+    return response({
+      res,
+      status: 500,
+      message: "Server error",
+    });
   }
-};
+}
 
-// find users using the id
-const getUser = async (req, res) => {
-  let statusCode = 500;
-  console.log("REQ", req);
+exports.createOrUpdateUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      statusCode = 400;
-      throw new Error("User not found");
+    const { body } = req;
+    if (!body) {
+      return response({
+        res,
+        status: 400,
+        message: "Request body is missing",
+      });
     }
-    return res.status(200).json({ user });
+    // TODO: update the front end with these fields 
+    const { username} = body; 
+    if (!username) {
+      return response({
+        res,
+        status: 400,
+        message: "Missing required fields",
+      });
+    }
+
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return response({
+        res,
+        status: 200,
+        message: "User already exists",
+        data: existingUser,
+      });
+    }
+// TODO update name
+    const newUser = new User({
+      username
+    });
+
+    await newUser.save();
+    return response({
+      res,
+      status: 201,
+      message: "User created",
+      data: newUser,
+    });
   } catch (error) {
-    await res.status(statusCode).json({ error: error.message });
+    console.error(error);
+    res.status(500).send("Server error");
+    return response({
+      res,
+      status: 500,
+      message: "Server error",
+    });
   }
 };
 
-module.exports = {
-  getUser,
-  listUsers,
-};
+
+exports.getUser = async (req, res) => {
+  try {
+    const { username } = req.params;
+    if (!username) {
+      return response({
+        res,
+        status: 400,
+        message: "Missing required fields",
+      });
+    }
+
+    const user = await User.findOne({ username });
+    if (!user) {
+      return response({
+        res,
+        status: 404,
+        message: "User not found",
+      });
+    }
+
+    return response({
+      res,
+      status: 200,
+      message: "User found",
+      data: user,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+    return response({
+      res,
+      status: 500,
+      message: "Server error",
+    });
+  }
+}

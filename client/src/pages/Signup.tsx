@@ -40,7 +40,7 @@ loading={loading}
 submit={handleSignup}
 initState={initState}
 cta='signup'
-link='/'
+link='/auth/login'
 linkPrompt="Already have an account?"
 linkText="Login"
 

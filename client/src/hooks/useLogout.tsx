@@ -8,10 +8,10 @@ import getErrorMessage from "../helpers/getErrorMessage"
 import { useNavigate } from "react-router"
 import { useState } from "react"
 import * as api from '../api/auth'
-import { useCookieContext } from "../context/auth.context";
+import { useAuthContext } from "../context/auth.context";
 
 const useLogout = () => {
-    const {removeCookie} = useCookieContext() //retrieve the removeCookie function
+    const {removeCookie} = useAuthContext() //retrieve the removeCookie function
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     

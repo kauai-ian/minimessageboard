@@ -13,12 +13,9 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-router.post("/login/password", verifyBody, handleLogin);
+router.post("/login", verifyBody, handleLogin);
 router.post("/logout",handleLogout);
-router.get("/signup", signupForm);
 router.post("/signup", verifyBody, handleSignup);
-router.get("/login", (req, res, next) => {
-  res.render("login");
-});
+
 
 module.exports = router;

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 export type MessageFormProps = {
-  addMessage: (title: string, text: string, user: string) => void;
+  addMessage: (text: string, user: string) => void;
   loggedIn: boolean;
 };
 
@@ -11,15 +11,13 @@ const MessageForm: React.FC<MessageFormProps> = ({
   addMessage,
   loggedIn,
 }) => {
-  const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [user, setUser] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!loggedIn || title === "" || message === "") return;
-    addMessage(title, message, user);
-    setTitle("");
+    if (!loggedIn  || message === "") return;
+    addMessage(message, user);
     setMessage("");
     setUser("");
   };
@@ -36,16 +34,6 @@ const MessageForm: React.FC<MessageFormProps> = ({
             className="new-message-form"
             name="new-message-form"
           >
-            <div className="form-row">
-              <label htmlFor="title">Title:</label>
-              <input
-                type="text"
-                name="title"
-                placeholder="Enter title here"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
             <div className="form-row">
               <label htmlFor="message">Message:</label>
               <input

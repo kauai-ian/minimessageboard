@@ -4,10 +4,10 @@ import Message from "../components/Message";
 import { MessageType } from "../types";
 import API_Url from "../api/config";
 import MessageForm from "../components/MessageForm";
-import { useCookieContext } from "../context/auth.context";
+import { useAuthContext } from "../context/auth.context";
 
 const MessageBoard = () => {
-  const { loggedIn, cookies } = useCookieContext();
+  const { loggedIn, cookies } = useAuthContext();
   const [messages, setMessages] = useState<MessageType[]>([]);
 
   //fetchData anytime state changes
@@ -27,13 +27,14 @@ const MessageBoard = () => {
       console.error("failed to fetch data", error);
     }
   };
-
-  const addMessage = async (title: string, text: string) => {
+//TODO: getting an error from front end request pointing to the below. 
+  const addMessage = async ( text: string) => {
     try {
+      console.log("Data being sent:", { body: text, _id: cookies.userId });
+
       const { data } = await axios.post(`${API_Url}/messages`, {
-        title,
-        text,
-        user: cookies.username,
+        body: text,
+        _id: cookies.userId,
       });
       setMessages([...messages, data.data]);
     } catch (error) {

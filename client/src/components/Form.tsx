@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   Flex,
-  Heading,
   Text,
   Link,
   Stack,
@@ -14,8 +13,8 @@ import {
 export type InputItem = Omit<InputProps, "onChange" | "value">;
 
 type Props = {
-  inputs: InputItem[];
   title: string;
+  inputs: InputItem[];
   submit: (formData: unknown) => void;
   initState: Record<string, string>;
   cta: string;
@@ -26,7 +25,6 @@ type Props = {
 };
 
 export const Form: FC<Props> = ({
-  title,
   inputs,
   submit,
   initState,
@@ -66,12 +64,6 @@ const validate = () => {
       bg={useColorModeValue("beige.50", "beige.800")}
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} px={6}>
-        <Stack align={"center"}>
-          <Heading fontSize={"4xl"}>{title}</Heading>
-          <Text fontSize={"lg"} color={"gray.600"}>
-            {title}
-          </Text>
-        </Stack>
         <Box
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}

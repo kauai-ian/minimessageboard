@@ -40,7 +40,7 @@ const Login = () => {
         submit={handleLogin}
         initState={initState}
         cta="Login"
-        link="/signup"
+        link="/auth/signup"
         linkPrompt="Don't have an account?"
         linkText="Sign up"
       />

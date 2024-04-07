@@ -12,7 +12,6 @@ export type MessageProps = MessageType & {
 const Message: React.FC<MessageProps> = ({
   _id,
   user,
-  title,
   text,
   timestamp,
   onUpdate,
@@ -43,7 +42,6 @@ const Message: React.FC<MessageProps> = ({
       <li className="message">
         <div key={_id}>
           <span>User: {user}</span>
-          <span>Title: {capFrstLtr(title)}</span>
           <span>Timestamp: {timestamp}</span>
           {editMode ? (
             <textarea

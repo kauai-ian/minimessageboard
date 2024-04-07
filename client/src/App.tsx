@@ -24,8 +24,6 @@ function App() {
           }
         />
         <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/messages" element={<AuthRoute><MessageBoard /></AuthRoute>} /> to be done in future feature to have users post if logged in*/}
-          
       </Routes>
     </>
   );

@@ -6,17 +6,17 @@
 import React, { PropsWithChildren, createContext, useContext } from "react";
 import { useCookies } from "react-cookie";
 
-export type CookieContextType = {
-  cookies: { [x: string]: unknown };
+export type AuthContextType = {
   loggedIn: boolean;
+  cookies: { [x: string]: unknown };
   removeCookie: (name: string, options?: object) => void;
   setCookie: (name: string, value: string | object, options?: object) => void;
 };
 
-const CookieContext = createContext<CookieContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useCookieContext = () => {
-  const context = useContext(CookieContext);
+export const useAuthContext = () => {
+  const context = useContext(AuthContext);
   if (!context) {
     throw new Error(
       "useCookieContext must be used within a CookieContextProvider"
@@ -26,7 +26,7 @@ export const useCookieContext = () => {
 };
 
 // context provider
-export const CookieProvider: React.FC<PropsWithChildren<object>> = ({
+export const AuthProvider: React.FC<PropsWithChildren<object>> = ({
   children,
 }) => {
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -43,16 +43,16 @@ export const CookieProvider: React.FC<PropsWithChildren<object>> = ({
   const removeCookieHandler = (name: string, options?: object) => {
     removeCookie(name, options);
   };
-  const contextValue: CookieContextType = {
-    cookies,
+  const contextValue: AuthContextType = {
     loggedIn,
+    cookies,
     setCookie: setCookieHandler,
     removeCookie: removeCookieHandler,
   };
 
   return (
-    <CookieContext.Provider value={contextValue}>
+    <AuthContext.Provider value={contextValue}>
       {children}
-    </CookieContext.Provider>
+    </AuthContext.Provider>
   );
 };
