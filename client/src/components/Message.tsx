@@ -11,14 +11,14 @@ export type MessageProps = MessageType & {
 
 const Message: React.FC<MessageProps> = ({
   _id,
-  user,
-  text,
-  timestamp,
+  author: { username }, // destructure the username from the object author
+  body,
+  updatedAt,
   onUpdate,
   onRemove,
 }) => {
   const [editMode, setEditMode] = useState(false);
-  const [editedText, setEditedText] = useState(text);
+  const [editedText, setEditedText] = useState(body);
 
   const handleEdit = () => {
     setEditMode(true);
@@ -37,19 +37,20 @@ const Message: React.FC<MessageProps> = ({
     onRemove(_id)
   };
 
+
   return (
     <>
       <li className="message">
         <div key={_id}>
-          <span>User: {user}</span>
-          <span>Timestamp: {timestamp}</span>
+          <span>User: {username}</span>
+          <span>Timestamp: {updatedAt}</span>
           {editMode ? (
             <textarea
               value={editedText}
               onChange={(e) => setEditedText(e.target.value)}
             />
           ) : (
-            <span>Message: {capFrstLtr(text)}</span>
+            <span>Message: {capFrstLtr(body)}</span>
           )}
           {editMode ? (
             <>

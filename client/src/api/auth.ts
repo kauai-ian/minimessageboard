@@ -45,9 +45,9 @@ export const signup = async ({
 
 export const logout = async () => {
   try {
-    const res = await axios.delete(`${API_Url}/auth/logout`);
+    const res = await axios.post(`${API_Url}/auth/logout`);
     return await res.data;
   } catch (error) {
-    throw new Error("Failed to login: " + getErrorMessage(error));
+    throw new Error("Failed to logout: " + getErrorMessage(error));
   }
 };

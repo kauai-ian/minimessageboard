@@ -32,6 +32,11 @@ export const AuthProvider: React.FC<PropsWithChildren<object>> = ({
   const [cookies, setCookie, removeCookie] = useCookies();
   const loggedIn = !!cookies["user-cookie"]
 
+   // Log cookies 
+   console.log("Cookies:", cookies);
+   console.log("Loggedin status:", loggedIn);
+
+
   const setCookieHandler = (
     name: string,
     value: string | object,

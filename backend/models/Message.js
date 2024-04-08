@@ -8,4 +8,10 @@ const schema = new mongoose.Schema({
     createdDate: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 });
+
+// every time a message is updated and saved to the database, the updatedAt field will automatically be updated.
+schema.pre('save', function(next) {
+    this.updatedAt = new Date();
+    next();
+});
 module.exports = mongoose.model("Message", schema);

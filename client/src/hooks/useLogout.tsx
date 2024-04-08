@@ -20,7 +20,7 @@ const useLogout = () => {
         setLoading(true)
         try {
             await api.logout()
-            removeCookie('daCookieMonster')
+            removeCookie('user-cookie')
             navigate('/')
         } catch (err) {
             throw new Error('failed to logout' + getErrorMessage(err))

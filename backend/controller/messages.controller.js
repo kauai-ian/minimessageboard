@@ -28,6 +28,7 @@ exports.list = async (req, res) => {
 exports.create = async (req, res, next) => {
   let statusCode = 200;
   try {
+    console.log("request body", req.body)
     if (!req?.body) {
       statusCode = 400;
       throw new Error("Request body is missing");
@@ -45,9 +46,9 @@ exports.create = async (req, res, next) => {
       throw new Error("User does not exist");
     }
 
-    const newMessage = new Message({ body, _id });
+    const newMessage = new Message({ body, author: _id });
     await newMessage.save();
-    console.log(newMessage);
+    console.log("new message", newMessage);
 
     return response({
       res,

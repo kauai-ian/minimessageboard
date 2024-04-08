@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 export type MessageFormProps = {
-  addMessage: (text: string, user: string) => void;
+  addMessage: (body: string, user: string) => void;
   loggedIn: boolean;
 };
 

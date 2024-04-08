@@ -6,7 +6,9 @@ const response = require("../helpers/response");
 //handle login takes in a request, authenticates user vs db username, logs in or error.
 exports.handleLogin = async (req, res, next) => {
   console.log("logging in user", { body: req.body, username: req.body.username });
+  console.log("cookie", req.cookies)
   try {
+    console.log("Session Cookie:", req.sessionID); 
     passport.authenticate("local", (err, username, info) => {
       if (err) {
         throw new Error(err.message);
@@ -16,6 +18,7 @@ exports.handleLogin = async (req, res, next) => {
         if (err) {
           throw new Error(err.message);
         }
+        res.cookie('user-cookie', req.sessionID, { maxAge: 86400000, httpOnly: false }); // trying to set the cookie here
         return response({
           res,
           status: 200,
@@ -59,28 +62,29 @@ exports.handleSignup = async (req, res, next) => {
     // create a new username and password then login user
     User.register(new User({ username }), password, (err, username) => {
       console.log("User has been registered and created", { username, err });
+      res.redirect("/auth/login");
       if (err) {
         next(err);
       }
       // login the user (its a function so it can persist through the session)
-      req.login(username, async (err) => {
-        if (err) {
-          next(err);
-        }
-        return response({
-          res,
-          status: 200,
-          message: "logged in",
-          data: username,
-        });
-      });
+      // req.login(username, async (err) => {
+      //   if (err) {
+      //     next(err);
+      //   }
+      //   return response({
+      //     res,
+      //     status: 200,
+      //     message: "logged in",
+      //     data: username,
+      //   });
+      // });
     });
   } catch (err) {
     next(err);
   }
 };
 
-// middleware checks if user is authenticated else redirect
+// middleware checks if user is authenticated by passport.js 
 exports.isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();

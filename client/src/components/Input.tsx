@@ -21,7 +21,7 @@ const Input: FC<Props> = ({
 }) => {
   return (
     <FormControl id={name} isRequired={isRequired}>
-      <FormLabel>{label}</FormLabel>
+      <FormLabel> {label}</FormLabel>
       <CInput name={name} value={value} onChange={onChange} type={type} />
     </FormControl>
   );

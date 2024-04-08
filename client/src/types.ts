@@ -1,9 +1,13 @@
+export type User = {
+  _id: string;
+  username: string;
+}
+
 export type MessageType = {
   _id: string;
-  user: string;
-  title: string;
-  text: string;
-  timestamp: string;
+  author: User; // specify the type as User
+  body: string;
+  updatedAt: string;
 };
 
 export type SignupFormData = {

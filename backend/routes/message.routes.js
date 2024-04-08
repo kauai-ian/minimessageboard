@@ -4,7 +4,7 @@ const messages = require("../controller/messages.controller");
 const { isAuthenticated } = require("../controller/auth.controller");
 
 router.get("/", messages.list);
-router.post("/", isAuthenticated, messages.create);
+router.post("/",  messages.create);
 router.get("/:_id", isAuthenticated, messages.getMessage);
 router.put("/:_id", isAuthenticated, messages.updateMessage);
 router.delete("/:_id", isAuthenticated, messages.deleteMessage);

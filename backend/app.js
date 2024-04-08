@@ -9,6 +9,7 @@ const logger = require("morgan");
 const cors = require("cors");
 const passport = require("passport");
 const session = require("express-session");
+var cookieParser = require('cookie-parser')
 const MongoStore = require("connect-mongo"); // session support
 
 // routes
@@ -30,11 +31,16 @@ app.use(express.urlencoded({ extended: false })); // parse form data
 // database connect
 connectdb()
 
+// cookie parse middleware
+app.use(cookieParser())
+
 // session middleware
 app.use(
   session({
-    secret: "baby manoa",
+    secret: 'babycakes',
+    name: 'user-cookie', // TODO: so does this need to be a seperate cookie that stores the session information? And then the front end would set the information in a different cookie for the 
     resave: false,
+    httpOnly: false,
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl: process.env.DB_URI,

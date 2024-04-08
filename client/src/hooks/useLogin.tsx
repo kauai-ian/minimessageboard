@@ -18,7 +18,8 @@ const useLogin = () => {
     try {
       const res = await api.login({ username, password }); // api login auth
       setData(res.data);
-      setCookie("user-cookie", res.data.token);
+      console.log(res.data)
+      setCookie("user-cookie", JSON.stringify(res.data)); // there was no token, so setting the cookie with the user data changed the cookie to not be undefined. 
       navigate("/profile");
     } catch (err) {
       console.error("failed to login", err);

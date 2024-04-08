@@ -5,6 +5,10 @@ import { MessageType } from "../types";
 import API_Url from "../api/config";
 import MessageForm from "../components/MessageForm";
 import { useAuthContext } from "../context/auth.context";
+axios.defaults.withCredentials = true
+type UserData= {
+_id: string
+}
 
 const MessageBoard = () => {
   const { loggedIn, cookies } = useAuthContext();
@@ -28,15 +32,22 @@ const MessageBoard = () => {
     }
   };
 //TODO: getting an error from front end request pointing to the below. 
-  const addMessage = async ( text: string) => {
+  const addMessage = async ( text: string, _id: string) => {
     try {
-      console.log("Data being sent:", { body: text, _id: cookies.userId });
+      console.log(cookies)
+      const userId: string = (cookies['user-cookie'] as UserData )._id
+      console.log("Data being sent:", { body: text, userId });
 
-      const { data } = await axios.post(`${API_Url}/messages`, {
+      const response = await axios.post(`${API_Url}/messages`, {
         body: text,
-        _id: cookies.userId,
+        _id,
       });
-      setMessages([...messages, data.data]);
+
+       // Log the entire request and response
+    console.log("Request:", response.request);
+    console.log("Response:", response.data);
+
+      setMessages([...messages, response.data]);
     } catch (error) {
       console.error("failed to add message", error);
     }

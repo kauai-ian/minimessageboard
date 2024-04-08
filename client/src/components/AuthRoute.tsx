@@ -7,7 +7,7 @@ import { FC } from "react";
 const AuthRoute: FC<RouteProps> = ({ children }) => {
     const {isAuthenticated } = useAuth()
     if(!isAuthenticated) {
-        return <Navigate to='/' />
+        return <Navigate to='/auth/login' replace />
     }
     return children
 }
